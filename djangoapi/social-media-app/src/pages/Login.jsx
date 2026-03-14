@@ -1,30 +1,56 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import LoginForm from "../components/authentication/LoginForm";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function Login() {
+function LoginForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      // Call Django backend login API
+      const response = await axios.post("http://127.0.0.1:8000/api/auth/login/", {
+        email: email,
+        password: password,
+      });
+
+      // If login succeeds, save user info + tokens
+      if (response.data) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("access", response.data.access);
+        localStorage.setItem("refresh", response.data.refresh);
+
+        // Redirect to Home page
+        navigate("/home");
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      alert("Invalid credentials");
+    }
+  };
+
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-6 d-flex align-items-center">
-          <div className="content text-center px-4">
-            <h1 className="text-primary">Welcome to Postagram!</h1>
-            <p className="content">
-              Login now and start enjoying! <br />
-              Or if you don't have an account, please{" "}
-              <Link to="/register/">register</Link>.
-            </p>
-          </div>
-        </div>
-        <div className="col-md-6 p-5">
-          <LoginForm />
-        </div>
-      </div>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="Password"
+        required
+      />
+      <button type="submit">Login</button>
+    </form>
   );
 }
 
-export default Login;
-
-
-
+export default LoginForm;

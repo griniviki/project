@@ -10,3 +10,5 @@ def debug_view(request):
         "auth": str(request.auth),
         "user": str(request.user),
     })
+
+

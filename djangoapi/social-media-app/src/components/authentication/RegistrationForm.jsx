@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
-
 import { useUserActions } from "../../hooks/user.actions";
 
 function RegistrationForm() {
@@ -11,7 +10,7 @@ function RegistrationForm() {
     password: "",
     first_name: "",
     last_name: "",
-    bio: "",
+    tel: "",   // ✅ changed from bio to tel
   });
   const [error, setError] = useState(null);
   const userActions = useUserActions();
@@ -32,7 +31,7 @@ function RegistrationForm() {
       email: form.email,
       first_name: form.first_name,
       last_name: form.last_name,
-      bio: form.bio,
+      tel: form.tel,   // ✅ send tel instead of bio
     };
 
     userActions.register(data).catch((err) => {
@@ -60,11 +59,12 @@ function RegistrationForm() {
           placeholder="Enter first name"
         />
         <Form.Control.Feedback type="invalid">
-          This file is required.
+          This field is required.
         </Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group className="mb-3">
-        <Form.Label>Last name</Form.Label>
+        <Form.Label>Last Name</Form.Label>
         <Form.Control
           value={form.last_name}
           onChange={(e) => setForm({ ...form, last_name: e.target.value })}
@@ -73,9 +73,10 @@ function RegistrationForm() {
           placeholder="Enter last name"
         />
         <Form.Control.Feedback type="invalid">
-          This file is required.
+          This field is required.
         </Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group className="mb-3">
         <Form.Label>Username</Form.Label>
         <Form.Control
@@ -86,9 +87,10 @@ function RegistrationForm() {
           placeholder="Enter username"
         />
         <Form.Control.Feedback type="invalid">
-          This file is required.
+          This field is required.
         </Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group className="mb-3">
         <Form.Label>Email address</Form.Label>
         <Form.Control
@@ -118,14 +120,14 @@ function RegistrationForm() {
         </Form.Control.Feedback>
       </Form.Group>
 
+      {/* ✅ Tel field */}
       <Form.Group className="mb-3">
-        <Form.Label>Bio</Form.Label>
+        <Form.Label>Tel.</Form.Label>
         <Form.Control
-          value={form.bio}
-          onChange={(e) => setForm({ ...form, bio: e.target.value })}
-          as="textarea"
-          rows={3}
-          placeholder="A simple bio ... (Optional)"
+          value={form.tel}
+          onChange={(e) => setForm({ ...form, tel: e.target.value })}
+          type="text"
+          placeholder="Enter phone number (optional)"
         />
       </Form.Group>
 

@@ -7,13 +7,24 @@ from core.abstract.models import AbstractModel, AbstractManager
 #from django.core.exceptions import ObjectDoesNotExist
 #from django.http import Http404
 
-class UserManager(BaseUserManager, AbstractManager):
+#class UserManager(BaseUserManager, AbstractManager):
     #def get_object_by_public_id(self, public_id):
         #try:
             #isinstance = self.get(public_id=public_id)
             #return isinstance
         #except (ObjectDoesNotExist, ValueError, TypeError):
             #raise Http404("User not found.")
+
+from django.core.exceptions import ObjectDoesNotExist
+from rest_framework.exceptions import NotFound
+
+class UserManager(BaseUserManager, AbstractManager):
+    def get_object_by_public_id(self, public_id):
+        try:
+            return self.get(public_id=public_id)
+        except (ObjectDoesNotExist, ValueError, TypeError):
+            raise NotFound("User not found.")
+
 
     def create_user(self, username, email, password=None, **kwargs):
         #first_name = kwargs.pop('first_name', '')
@@ -41,7 +52,15 @@ class UserManager(BaseUserManager, AbstractManager):
         user.save(using=self._db)
         return user
 class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    # ✅ Keep Django's default auto-increment ID
+    id = models.BigAutoField(primary_key=True)
+
+    # ✅ Add a UUID for external use
+    public_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
+
+    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    #public_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)  # ✅ add this
     username = models.CharField(db_index=True, max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -51,10 +70,10 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)  # You need this if using Django admin
     #created = models.DateTimeField(auto_now_add=True)
     #updated = models.DateTimeField(auto_now=True)
-    bio = models.TextField(blank=True, null=True)
+    tel = models.CharField(max_length=20, blank=True, null=True)
     avatar = models.ImageField(null=True)
     posts_liked = models.ManyToManyField("core_label.Post", related_name="liked_by")
-
+    
     #posts_liked = models.ManyToManyField("core_post.Post", related_name="liked_by")
     
 

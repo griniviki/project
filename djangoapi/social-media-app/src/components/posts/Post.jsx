@@ -27,19 +27,14 @@ const MoreToggleIcon = React.forwardRef(({ onClick }, ref) => (
   </button>
 ));
 
-
-function Post(props) {
-  const { post, refresh } = props;
+function Post({ post, refresh }) {
   const [showToast, setShowToast] = useState(false);
-
   const user = getUser();
 
   const handleLikeClick = (action) => {
     axiosService
       .post(`/post/${post.id}/${action}/`)
-      .then(() => {
-        refresh();
-      })
+      .then(() => refresh())
       .catch((err) => console.error(err));
   };
 
@@ -52,6 +47,10 @@ function Post(props) {
       })
       .catch((err) => console.error(err));
   };
+
+  // ✅ Safe fallbacks
+  const authorName = post.author?.name || post.author?.username || "Unknown author";
+  const createdAt = post.created ? format(post.created) : "";
 
   return (
     <>
@@ -67,27 +66,25 @@ function Post(props) {
                 className="me-2 border border-primary border-2"
               />
               <div className="d-flex flex-column justify-content-start align-self-center mt-2">
-                <p className="fs-6 m-0">{post.author.name}</p>
+                <p className="fs-6 m-0">{authorName}</p>
                 <p className="fs-6 fw-lighter">
-                  <small>{format(post.created)}</small>
+                  <small>{createdAt}</small>
                 </p>
               </div>
             </div>
-            {user.name === post.author.name && (
-              <div>
-                <Dropdown>
-                  <Dropdown.Toggle as={MoreToggleIcon}></Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <UpdatePost post={post} refresh={refresh} />
-                    <Dropdown.Item
-                      onClick={handleDelete}
-                      className="text-danger"
-                    >
-                      Delete
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
+            {user?.name && post.author?.name && user.name === post.author.name && (
+              <Dropdown>
+                <Dropdown.Toggle as={MoreToggleIcon}></Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <UpdatePost post={post} refresh={refresh} />
+                  <Dropdown.Item
+                    onClick={handleDelete}
+                    className="text-danger"
+                  >
+                    Delete
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             )}
           </Card.Title>
           <Card.Text>{post.body}</Card.Text>
@@ -105,7 +102,7 @@ function Post(props) {
               }}
             />
             <p className="ms-1 fs-6">
-              <small>{post.likes_count} like</small>
+              <small>{post.likes_count || 0} like</small>
             </p>
           </div>
         </Card.Body>
@@ -119,13 +116,11 @@ function Post(props) {
                 fontSize: "20px",
                 color: post.liked ? "#0D6EFD" : "#C4C4C4",
               }}
-              onClick={() => {
-                if (post.liked) {
-                  handleLikeClick("remove_like");
-                } else {
-                  handleLikeClick("like");
-                }
-              }}
+              onClick={() =>
+                post.liked
+                  ? handleLikeClick("remove_like")
+                  : handleLikeClick("like")
+              }
             />
             <p className="ms-1">
               <small>Like</small>
@@ -159,7 +154,3 @@ function Post(props) {
 }
 
 export default Post;
-
-
-
-

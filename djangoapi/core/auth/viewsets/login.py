@@ -11,6 +11,7 @@ from drf_yasg import openapi
 class LoginViewSet(ViewSet):
     serializer_class = LoginSerializer
     permission_classes = (AllowAny,) 
+    authentication_classes = []  # ✅ prevents CSRF/session auth issues
     http_method_names = ['post']
 
     @swagger_auto_schema(
@@ -25,6 +26,19 @@ class LoginViewSet(ViewSet):
         except TokenError as e:
             raise InvalidToken(e.args[0])
         return Response(serializer.validated_data,status=status.HTTP_200_OK)
+
+
+
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(["GET"])
+def debug_auth(request):
+    return Response({
+        "HTTP_AUTHORIZATION": request.META.get("HTTP_AUTHORIZATION"),
+        "AUTHORIZATION": request.META.get("AUTHORIZATION"),
+    })
 
 
 

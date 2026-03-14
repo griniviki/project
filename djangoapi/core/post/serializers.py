@@ -13,10 +13,13 @@ class PostSerializer(AbstractSerializer):
     likes_count = serializers.SerializerMethodField()
 
     def get_author(self, instance):
-        return UserSerializer(instance.author).data
+        # ✅ Safely serialize author, fallback if missing
+        if instance.author:
+            return UserSerializer(instance.author).data
+        return {"id": None, "username": "Unknown", "email": ""}
 
     def get_liked(self, instance):
-        request = self.context.get('request', None)
+        request = self.context.get("request", None)
         if request is None or request.user.is_anonymous:
             return False
         return request.user.has_liked(instance)
@@ -25,11 +28,21 @@ class PostSerializer(AbstractSerializer):
         return instance.liked_by.count()
 
     def update(self, instance, validated_data):
+        # ✅ Mark post as edited only once
         if not instance.edited:
-            validated_data['edited'] = True
+            validated_data["edited"] = True
         return super().update(instance, validated_data)
 
     class Meta:
         model = Post
-        fields = ['id', 'author', 'body', 'edited', 'liked', 'likes_count', 'created', 'updated']
+        fields = [
+            "id",
+            "author",
+            "body",
+            "edited",
+            "liked",
+            "likes_count",
+            "created",
+            "updated",
+        ]
         read_only_fields = ["edited", "author"]
