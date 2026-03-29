@@ -1,11 +1,12 @@
-from django.urls import path
-from .views import SimpleLoginView
-from rest_framework_simplejwt.views import TokenRefreshView
+from django.contrib import admin
+from django.urls import path, include
+from core import routers
 
 urlpatterns = [
-    path('api/token/', SimpleLoginView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    #path("admin/", admin.site.urls),
+    path("api/", include("core.routers")),   # ✅ loads all router + me
+    path("api/", include("core.auth.urls")), # ✅ loads token endpoints
+    path("api/", include(routers.urlpatterns)),
 ]
-
 
 
