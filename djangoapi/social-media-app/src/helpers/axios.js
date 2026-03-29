@@ -60,8 +60,25 @@ const refreshAuthLogic = async (failedRequest) => {
 createAuthRefreshInterceptor(axiosService, refreshAuthLogic);
 
 // ✅ Helpers for SWR
-export const fetcher = (url) =>
-  axiosService.get(url).then((res) => res.data);
+
+
+
+export const fetcher = (url) => {
+  console.log("[FETCHER] Requesting:", url);
+
+  return axiosService.get(url)
+    .then((res) => {
+      console.log("[FETCHER] Response status:", res.status);
+      console.log("[FETCHER] Response data:", res.data);
+      return res.data;
+    })
+    .catch((err) => {
+      console.error("[FETCHER] Error fetching:", url, err);
+      throw err;
+    });
+};
+
+
 
 export const fetchUser = (url) =>
   axiosService.get(url).then((res) => res.data);

@@ -8,6 +8,9 @@ import SinglePost from "./pages/SinglePost";
 import Profile from "./pages/Profile";
 import EditProfile from "./pages/EditProfile";
 import Dashboard from "./pages/Dashboard"; // ✅ import Dashboard
+import GasStations from "./pages/GasStations";
+
+
 
 function App() {
   return (
@@ -62,6 +65,7 @@ function App() {
         }
       />
 
+      <Route path="/gasstations" element={<GasStations />} />
       <Route path="/login/" element={<Login />} />
       <Route path="/register/" element={<Registration />} />
     </Routes>

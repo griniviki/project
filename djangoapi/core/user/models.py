@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin 
 from django.db import models
 from core.abstract.models import AbstractModel, AbstractManager
+from decimal import Decimal
 
 #from django.core.exceptions import ObjectDoesNotExist
 #from django.http import Http404
@@ -58,9 +59,6 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
 
     # ✅ Add a UUID for external use
     public_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)
-
-    #id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    #public_id = models.UUIDField(default=uuid.uuid4, unique=True, editable=False)  # ✅ add this
     username = models.CharField(db_index=True, max_length=255, unique=True)
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
@@ -68,13 +66,16 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)  # You need this if using Django admin
-    #created = models.DateTimeField(auto_now_add=True)
-    #updated = models.DateTimeField(auto_now=True)
     tel = models.CharField(max_length=20, blank=True, null=True)
     avatar = models.ImageField(null=True)
     posts_liked = models.ManyToManyField("core_label.Post", related_name="liked_by")
     
-    #posts_liked = models.ManyToManyField("core_post.Post", related_name="liked_by")
+    salary_before_taxes = models.IntegerField(default=0)
+    pit_rate = models.DecimalField(max_digits=4, decimal_places=2, default=Decimal("0.18"))
+    military_tax_rate = models.DecimalField(max_digits=4, decimal_places=2, default=Decimal("0.05"))
+    salary_after_taxes = models.IntegerField(default=0)
+    pension_fee = models.DecimalField(max_digits=4, decimal_places=2, default=Decimal("0.22"))
+
     
 
     USERNAME_FIELD = 'email'
@@ -103,6 +104,12 @@ class User(AbstractModel, AbstractBaseUser, PermissionsMixin):
     def has_liked(self, post):
         """Return True if the user has liked a `post`; else False"""
         return self.posts_liked.filter(pk=post.pk).exists()
+
+    def save(self, *args, **kwargs):   # 🔥 NEW METHOD
+        # compute salary_after_taxes before saving
+        total_tax_rate = float(self.pit_rate) + float(self.military_tax_rate)
+        self.salary_after_taxes = int(self.salary_before_taxes * (1 - total_tax_rate))
+        super().save(*args, **kwargs)
 
 
 

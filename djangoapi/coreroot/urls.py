@@ -6,6 +6,8 @@ from rest_framework import permissions
 from core.views import debug_view
 #from core.user.views import me   # import the me view
 
+
+
 schema_view = get_schema_view(
     openapi.Info(
         title="Your API Title",
@@ -15,11 +17,10 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=[permissions.AllowAny],
 )
-
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("core.urls")),       # ✅ include app urls
-    #path("api/auth/me/", me, name="auth-me"), # ✅ custom endpoint
+    path("api/", include("core.urls")),       
+    path("api/gasstation/", include("core.gasstation.urls")),  # ✅ NEW
     path("api/debug/", debug_view),
 
     # Swagger / Redoc

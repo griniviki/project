@@ -10,7 +10,8 @@ function RegistrationForm() {
     password: "",
     first_name: "",
     last_name: "",
-    tel: "",   // ✅ changed from bio to tel
+    tel: "",
+    salary_before_taxes: "",
   });
   const [error, setError] = useState(null);
   const userActions = useUserActions();
@@ -31,9 +32,15 @@ function RegistrationForm() {
       email: form.email,
       first_name: form.first_name,
       last_name: form.last_name,
-      tel: form.tel,   // ✅ send tel instead of bio
+      tel: form.tel,
+      salary_before_taxes: form.salary_before_taxes,
     };
 
+
+     // 👇 Debug log to check payload
+  console.log("Submitting data:", data);
+
+  
     userActions.register(data).catch((err) => {
       if (err.message) {
         setError(err.request.response);
@@ -129,6 +136,18 @@ function RegistrationForm() {
           type="text"
           placeholder="Enter phone number (optional)"
         />
+      </Form.Group>
+
+      {/* ✅ Salary field */}
+      <Form.Group className="mb-3">
+        <Form.Label>Salary</Form.Label>
+        <Form.Control
+          value={form.salary_before_taxes}
+          onChange={(e) => setForm({ ...form, salary_before_taxes: e.target.value })}
+          type="number"
+          placeholder="Enter your salary (optional)"
+        />
+
       </Form.Group>
 
       <div className="text-content text-danger">{error && <p>{error}</p>}</div>
