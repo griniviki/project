@@ -4,6 +4,13 @@ import { Table, Spinner, Alert } from "react-bootstrap";
 import Layout from "../components/Layout";
 import { fetcher } from "../helpers/axios";
 
+function GasStations() {
+  const {
+    data: stations,
+    error: stationError,
+    isLoading: stationLoading,
+  } = useSWR("/gasstation/stations/", fetcher);
+
 function getCheapestPrice(stations, fuelType) {
   if (!stations || stations.length === 0) return null;
 
@@ -28,12 +35,7 @@ function getFuelNeeded(cars) {
   return { tankCapacity, currentFuel, fuelNeeded };
 }
 
-function GasStations() {
-  const {
-    data: stations,
-    error: stationError,
-    isLoading: stationLoading,
-  } = useSWR("/gasstation/stations/", fetcher);
+
 
   const { data: cars } = useSWR("/gasstation/cars/", fetcher);
 
@@ -152,3 +154,4 @@ function GasStations() {
 }
 
 export default GasStations;
+

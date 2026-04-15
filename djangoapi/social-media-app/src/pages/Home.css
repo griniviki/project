@@ -1,0 +1,90 @@
+/* Salary Modal Custom Styling */
+.salary-modal .modal-dialog {
+  max-width: 1000px;
+}
+
+.salary-modal .modal-content {
+  border-radius: 25px;
+  border: 2px solid #00ffc8;
+  box-shadow: 0 8px 20px rgba(151, 141, 141, 0.25);
+  animation: fadeIn 0.5s ease forwards;
+  min-height: 400px; /* flexible height */
+}
+
+/* Modal Header */
+.salary-modal .modal-header {
+  background-color: #ff0000;
+  color: #fff;
+  border-bottom: none;
+}
+
+.salary-modal .modal-title {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.salary-modal .modal-body {
+  background-color: #2e0d0d;
+  padding: 20px;
+}
+
+.salary-modal .form-control {
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff3cd; /* soft yellow background */
+  color: #000;
+
+}
+
+.salary-modal .btn-primary {
+  background-color: #ea78de; /* pink/purple */
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  transition: background-color 0.2s ease;
+}
+
+.salary-modal .btn-primary:hover {
+  background-color: #141514;
+}
+
+.salary-modal .btn-close {
+  filter: invert(1);
+}
+
+/* 🔥 Fade-in keyframes */
+@keyframes fadeIn {
+  from { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+}
+
+/* 🔥 Fade-out keyframes */
+@keyframes fadeOut {
+  from { 
+    opacity: 1; 
+    transform: translateY(0); 
+  }
+  to { 
+    opacity: 0; 
+    transform: translateY(-20px); 
+  }
+}
+
+/* Apply fade-out when modal is closing */
+.salary-modal.fade .modal-content {
+  animation: fadeOut 40s ease forwards;
+}
+
+/* Backdrop blur effect */
+.salary-modal ~ .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.4); /* semi-transparent dark overlay */
+  backdrop-filter: blur(6px);            /* frosted glass blur */
+  -webkit-backdrop-filter: blur(6px);    /* Safari support */
+  transition: backdrop-filter 0.3s ease, background-color 0.3s ease;
+}
