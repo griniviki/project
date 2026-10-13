@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Маршрутний лист</title>
+    <!-- Tailwind CSS для швидкої стилізації -->
+    <script src="https://jsdelivr.net"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-gray-100 p-6">
+
+    <!-- Панель управління (приховується при друці) -->
+    <div class="no-print max-w-4xl mx-auto mb-6 bg-white p-4 rounded shadow flex justify-between items-center">
+        <h1 class="text-xl font-bold text-gray-800">Конструктор маршрутного листа</h1>
+        <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded font-medium cursor-pointer">
+            🖨️ Друкувати / Зберегти в PDF
+        </button>
+    </div>
+
+    <!-- Бланк маршрутного листа (те, що піде на друк) -->
+    <div id="print-zone" class="print-container max-w-4xl mx-auto bg-white p-8 rounded shadow border border-gray-200">
+        <!-- Шапка документа -->
+        <div class="text-center mb-6">
+            <h2 class="text-xl font-bold uppercase tracking-wide">Маршрутний лист автомобіля</h2>
+            <p class="text-gray-600">від <input type="date" id="doc-date" class="border-b border-gray-400 focus:outline-none text-center font-medium"></p>
+        </div>
+
+        <!-- Реквізити підприємства та авто -->
+        <div class="grid grid-cols-2 gap-4 mb-6 text-sm">
+            <div>
+                <label class="block text-gray-500">Підприємство:</label>
+                <input type="text" id="company" class="w-full border-b border-gray-300 focus:outline-none py-1" value='ТОВ "Приклад"'>
+            </div>
+            <div>
+                <label class="block text-gray-500">Водій (ПІБ):</label>
+                <input type="text" id="driver" class="w-full border-b border-gray-300 focus:outline-none py-1" placeholder="Невід'ємний О.П.">
+            </div>
+            <div>
+                <label class="block text-gray-500">Автомобіль (Марка, Держ. номер):</label>
+                <input type="text" id="car" class="w-full border-b border-gray-300 focus:outline-none py-1" placeholder="Renault Kangoo (AA1111BB)">
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+                <div>
+                    <label class="block text-gray-500">Одометр старт:</label>
+                    <input type="number" id="odo-start" class="w-full border-b border-gray-300 focus:outline-none py-1 text-right" value="100000">
+                </div>
+                <div>
+                    <label class="block text-gray-500">Одометр кінець:</label>
+                    <input type="number" id="odo-end" class="w-full border-b border-gray-300 focus:outline-none py-1 text-right" value="100150">
+                </div>
+            </div>
+        </div>
+
+        <!-- Таблиця маршруту -->
+        <div class="mb-6">
+            <h3 class="font-bold text-gray-700 mb-2 text-sm uppercase">Маршрут руху</h3>
+            <table class="w-full border-collapse border border-gray-300 text-sm text-left">
+                <thead>
+                    <tr class="bg-gray-50 text-gray-700 font-semibold border-b border-gray-300">
+                        <th class="p-2 border border-gray-300 w-12 text-center">№</th>
+                        <th class="p-2 border border-gray-300">Пункт призначення (Адреса)</th>
+                        <th class="p-2 border border-gray-300">Мета поїздки</th>
+                        <th class="p-2 border border-gray-300 w-24 text-right">Відстань, км</th>
+                    </tr>
+                </thead>
+                <tbody id="route-rows">
+                    <!-- Рядки додаються динамічно через JS -->
+                </tbody>
+            </table>
+            <!-- Кнопка додавання рядка (приховується при друці) -->
+            <button id="add-row-btn" class="no-print mt-2 text-sm text-blue-600 hover:text-blue-800 font-semibold cursor-pointer">+ Додати пункт</button>
+        </div>
+
+        <!-- Блок пального та підписів -->
+        <div class="grid grid-cols-2 gap-8 text-sm mt-8 border-t border-gray-200 pt-4">
+            <!-- Розрахунок пального -->
+            <div class="space-y-1 bg-gray-50 p-3 rounded border border-gray-200">
+                <h4 class="font-bold text-gray-700 uppercase text-xs mb-2">Рух пального (літри)</h4>
+                <div class="flex justify-between"><span>Залишок при виїзді:</span> <input type="number" id="fuel-start" class="w-16 text-right border-b border-gray-300 focus:outline-none" value="20"></div>
+                <div class="flex justify-between"><span>Заправлено:</span> <input type="number" id="fuel-refueled" class="w-16 text-right border-b border-gray-300 focus:outline-none" value="30"></div>
+                <div class="flex justify-between"><span>Залишок при поверненні:</span> <input type="number" id="fuel-end" class="w-16 text-right border-b border-gray-300 focus:outline-none" value="35"></div>
+                <hr class="border-gray-300 my-1">
+                <div class="flex justify-between font-bold text-gray-900"><span>Фактично витрачено:</span> <span id="fuel-consumed">0</span></div>
+            </div>
+
+            <!-- Підписи -->
+            <div class="flex flex-col justify-between pt-2">
+                <div class="flex justify-between items-end">
+                    <span>Водій:</span>
+                    <span class="w-40 border-b border-gray-400 text-center text-xs text-gray-400">(підпис)</span>
+                </div>
+                <div class="flex justify-between items-end mt-4">
+                    <span>Бухгалтер:</span>
+                    <span class="w-40 border-b border-gray-400 text-center text-xs text-gray-400">(підпис)</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dist/app.js"></script>
+</body>
+</html>

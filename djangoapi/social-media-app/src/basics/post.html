@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Posts</title>
+  <link rel="stylesheet" href="post.css">
+  <link rel="stylesheet" href="04_25_26_fake_api.css">
+  <link rel="stylesheet" href="04_26_26_gasstation.css">
+  <link rel="stylesheet" href="05_03_26_product_cards.css" >
+  <link rel="stylesheet" href="05_06_26_traffic_light_system.css">
+  <link rel="stylesheet" href="05_09_26_timer.css">
+  <link rel="stylesheet" href="06_06_26_banking.css">
+</head>
+<body>
+  <div class="grid-container">
+    <!-- Left column -->
+    <div class="left-section">
+      <div class="traffic_light_system" ></div>
+      <img id="clicable_img" class="clicable_img" src="https://itproger.com/img/courses/1476977240.jpg" width="200" alt="Click many times">
+      <button id="changeBtn">Change Image</button>
+      <p>Post 1 disappear onclick</p>
+      <p>Post 2 disappear onclick</p>
+      <p>Post 3 disappear onclick</p>
+      <div class="product_cards" ></div>
+    </div>
+
+    <!-- Middle column -->
+    <div class="form-section">
+      <h1>Create a Post</h1>
+      <form id="postForm">
+        <textarea id="postBody" placeholder="Write your post..." required></textarea>
+        <select id="linguisticsType">
+          <option value="text">Text</option>
+          <option value="quote">Quote</option>
+          <option value="note">Note</option>
+        </select>
+        <button type="submit">Submit</button>
+      </form>
+
+      <div class="posts-section">
+        <h1>All Your Posts</h1>
+        <ul id="postList"></ul>
+      </div>
+
+      <section>
+      <form id="paymentForm">
+        <input type="text" id="card_number" placeholder="0000 - 0000 - 0000 - 0000" />
+        <input type="text" id="name" placeholder="Enter your Name"/>
+        <input type="text" id="expiry_date" placeholder="Expiry date (format MM/YY)"/>
+        <input type="text" id="cvv" placeholder="cvv"/>
+        <input type="number" id="amount" placeholder="amount"/>
+
+        <button type="submit" id="payButton">SEND</button>
+    </form>
+    <table id="transactionsTable"></table>
+
+    
+    </section>
+
+    </div>
+
+    <!-- Right column -->
+    <div class="right-section">
+      <div class="closses_store">
+        <p>Fake API</p>
+      </div>
+      <div class="gasstation_store" ></div>
+
+    </div>
+    
+  </div>
+
+
+
+  <script src="post.js"></script>
+  <script src="04_19_26.js"></script>
+  <script src="04_25_26_fake_api.js"></script>
+  <script src="04_26_26_gasstation.js"></script>
+  <script src="05_03_26_product_cards.js" ></script>
+  <script src="05_06_26_traffic_light_system.js" ></script>
+  <script src="05_09_26_timer.js"></script>
+  <script src="05_11_26_telInput.js"></script>
+  <!--<script src="dist/TypeScript.js"></script>-->
+  <script src="dist/06_06_26_banking.js"></script>
+</body>
+</html>

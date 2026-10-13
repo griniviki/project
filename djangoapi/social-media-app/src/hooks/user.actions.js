@@ -2,7 +2,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import useSWR from "swr";
 
-const baseURL = "http://localhost:8000/api";
+const baseURL = "http://localhost:8000"; // ✅ no /api here
 
 // LocalStorage helpers
 function getUser() {
@@ -31,19 +31,19 @@ function setUserData(data) {
   );
 }
 
-// ✅ Hook for login/register/logout actions
+// Hook for login/register/logout actions
 function useUserActions() {
   const navigate = useNavigate();
 
   function login(data) {
-    return axios.post(`${baseURL}/auth/login/`, data).then((res) => {
+    return axios.post(`${baseURL}/api/auth/login/`, data).then((res) => {
       setUserData(res.data);
       navigate("/"); // redirect to home
     });
   }
 
   function register(data) {
-    return axios.post(`${baseURL}/auth/register/`, data).then((res) => {
+    return axios.post(`${baseURL}/api/auth/register/`, data).then((res) => {
       setUserData(res.data);
       navigate("/"); // redirect to home
     });
@@ -57,7 +57,7 @@ function useUserActions() {
   return { login, register, logout };
 }
 
-// ✅ SWR-powered hook to fetch current user
+// SWR-powered hook to fetch current user
 function useUser() {
   const fetcher = async (url) => {
     const token = getAccessToken();
@@ -69,7 +69,7 @@ function useUser() {
     return res.data;
   };
 
-  const { data, error, mutate } = useSWR("/auth/me/", fetcher);
+  const { data, error, mutate } = useSWR("/api/auth/me/", fetcher);
 
   return {
     user: data,

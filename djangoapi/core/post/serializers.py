@@ -1,4 +1,3 @@
-# core/post/serializers.py
 from rest_framework import serializers
 from core.abstract.serializers import AbstractSerializer
 from core.post.models import Post, PostMetadata
@@ -13,6 +12,7 @@ class PostMetadataSerializer(serializers.ModelSerializer):
 
 class PostSerializer(AbstractSerializer):
     author = serializers.SerializerMethodField(read_only=True)
+    author_public_id = serializers.UUIDField(source="author.public_id", read_only=True)
     liked = serializers.SerializerMethodField()
     likes_count = serializers.SerializerMethodField()
     metadata = PostMetadataSerializer(many=True, required=False)
@@ -58,14 +58,16 @@ class PostSerializer(AbstractSerializer):
         model = Post
         fields = [
             "id",
+            "public_id",          # ✅ expose post UUID
             "author",
+            "author_public_id",   # ✅ expose author UUID
             "body",
             "edited",
-            "linguistics_type",   # ✅ NEW FIELD
+            "linguistics_type",
             "liked",
             "likes_count",
             "created",
             "updated",
             "metadata",
         ]
-        read_only_fields = ["edited", "author"]
+        read_only_fields = ["edited", "author", "author_public_id"]

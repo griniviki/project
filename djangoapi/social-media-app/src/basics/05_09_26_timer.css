@@ -1,0 +1,18 @@
+
+
+.divBox {
+    width: 250px;
+    border: 1px solid black;
+    height: 200px;
+    background-color: rgb(88, 84, 84);
+    
+}
+
+.btn {
+  background-color:  rgb(88, 84, 84);
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  cursor: pointer;
+}

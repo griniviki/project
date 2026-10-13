@@ -1,10 +1,11 @@
+// src/index.js (or src/main.jsx if using Vite)
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import App from "./App";
 
-// Creating the root application component
+// Create the root application component
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
@@ -14,5 +15,3 @@ root.render(
     </BrowserRouter>
   </React.StrictMode>
 );
-
-

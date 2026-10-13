@@ -1,0 +1,23 @@
+.traffic_light_system {
+  width: 100px;
+  height: 50px;
+  background-color: black;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.red, .orange, .green {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  opacity: 1; 
+  /* background-color: black; */
+}
+
+.red { background-color: red; }
+.orange { background-color: orange; }
+.green { background-color: green; } 

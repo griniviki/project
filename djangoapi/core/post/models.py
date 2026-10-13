@@ -2,9 +2,9 @@ from django.db import models
 from django.conf import settings
 from core.abstract.models import AbstractModel, AbstractManager
 
-
 class PostManager(AbstractManager):
-    pass
+    def get_object_by_public_id(self, public_id):
+        return self.get(public_id=public_id)
 
 
 class Post(AbstractModel):
@@ -22,11 +22,8 @@ class Post(AbstractModel):
         blank=True,
         related_name="posts"
     )
-
     body = models.TextField()
     edited = models.BooleanField(default=False)
-
-    # ✅ NEW FIELD (replaces grammar/lexis/phonetics JSONFields)
     linguistics_type = models.CharField(
         max_length=20,
         choices=LINGUISTICS_CHOICES,
@@ -41,7 +38,6 @@ class Post(AbstractModel):
     class Meta:
         db_table = "core_post"
 
-
 class Category(models.Model):
     name = models.CharField(max_length=50, unique=True)
 
@@ -51,9 +47,8 @@ class Category(models.Model):
     def __str__(self):
         return self.name
 
-
 class Language(models.Model):
-    code = models.CharField(max_length=5, primary_key=True)  # e.g. "en", "uk"
+    code = models.CharField(max_length=5, primary_key=True)
     name = models.CharField(max_length=50)
 
     class Meta:
@@ -61,7 +56,6 @@ class Language(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class PostMetadata(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="metadata")

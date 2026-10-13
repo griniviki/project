@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="06_24_26_fuel.css">
+</head>
+<body>
+        
+    <div id="fuel_section">
+  <form id="kmForm">
+    <h5 class="text-xl font-bold uppercase tracking-wide">Маршрутний лист автомобіля</h5>
+    <h6>MONTH</h6>   
+    <input type="month" id="monthPicker"/>
+    <!-- Контейнер для рядка -->
+     <div>
+      <input class="cellUser" type="number" id="fuelstart" placeholder="fuelleft"/>
+     </div>
+    <div id="kmRow">
+      <input class="cellCommon border-b border-gray-400 focus:outline-none text-center font-medium" type="date" id="doc-date"/>
+      <input class="cellUser" type="number" id="kmbefore" placeholder="Km before"/>
+      <input class="cellUser" type="number" id="kmafter" placeholder="Km after"/>
+      <input class="cellCommon" type="number" id="kmdiff" placeholder="Km difference"/>
+      <input class="cellUser" type="number" id="liters" placeholder="liters" />
+      <input class="cellUser" type="number" id="refill" placeholder="refill" />
+    </div>
+  </form>
+</div>
+
+<script src="dist/06_24_26_fuel.js"></script>
+
+</body>
+</html>

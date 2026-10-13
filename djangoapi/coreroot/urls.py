@@ -4,23 +4,21 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from core.views import debug_view
-#from core.user.views import me   # import the me view
-
-
 
 schema_view = get_schema_view(
     openapi.Info(
         title="Your API Title",
-        default_version='v1',
+        default_version="v1",
         description="API documentation",
     ),
     public=True,
     permission_classes=[permissions.AllowAny],
 )
+
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/", include("core.urls")),       
-    path("api/gasstation/", include("core.gasstation.urls")),  # ✅ NEW
+    path("api/", include("core.urls")),              # ✅ all core endpoints (user, post, comment, auth, etc.)
+    path("api/gasstation/", include("core.gasstation.urls")),
     path("api/debug/", debug_view),
 
     # Swagger / Redoc

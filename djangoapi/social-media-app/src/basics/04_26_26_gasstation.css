@@ -1,0 +1,33 @@
+.gasstation_store table {
+  border-collapse: collapse;
+  width: 70%;              /* narrower table */
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+}
+
+.gasstation_store th {
+  border: 1px solid #3e2f61; /* dark teal */
+  padding: 8px 12px;
+  text-align: left;
+  background-color: rgb(23, 20, 34); 
+  color: white;
+}
+
+.gasstation_store td {
+  width: 50px;                 /* limit cell width */
+  white-space: nowrap;         /* keep text on one line */
+  overflow: hidden;            /* hide overflowed text */
+  text-overflow: ellipsis;     /* show ... when cut off */
+  border: 1px solid #3e2f61;   /* match header border */
+  padding: 6px 10px;
+}
+
+.gasstation_store tr:nth-child(even) {
+  background-color: rgb(161, 145, 223); 
+}
+
+.gasstation_store tr:hover {
+  background-color: rgb(52, 45, 76); 
+  color: white;
+}

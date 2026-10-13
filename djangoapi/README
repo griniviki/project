@@ -1,0 +1,9 @@
+cd /home/viki/project/djangoapi
+source env/bin/activate
+
+cd /home/viki/project/djangoapi
+python3 manage.py runserver 0.0.0.0:8000
+
+cd /home/viki/project/djangoapi/social-media-app
+npm start
+

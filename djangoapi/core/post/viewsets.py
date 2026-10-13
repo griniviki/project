@@ -18,7 +18,12 @@ class PostViewSet(AbstractViewSet):
     lookup_field = "public_id"
 
     def get_queryset(self):
-        return Post.objects.all()
+        queryset = Post.objects.all()
+        author_public_id = self.request.query_params.get("author__public_id")
+        if author_public_id:
+            queryset = queryset.filter(author__public_id=author_public_id)
+        return queryset
+
 
     def get_object(self):
         lookup_value = self.kwargs[self.lookup_field]

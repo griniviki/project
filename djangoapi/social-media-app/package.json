@@ -11,16 +11,17 @@
     "axios": "^1.11.0",
     "axios-auth-refresh": "^3.3.6",
     "bootstrap": "^5.3.8",
-    "react": "^19.1.1",
+    "react": "^18.2.0",
     "react-bootstrap": "^2.10.10",
-    "react-dom": "^19.1.1",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.30.4",
     "react-scripts": "5.0.1",
     "swr": "^2.3.6",
     "timeago.js": "^4.0.2",
     "web-vitals": "^2.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "tsc -w & react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -58,7 +58,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-2$l0sinqwfw_v3#n8if5acz*^z#(^w^@b2++$=-fny!lp@$@t-"
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.0.104", "127.0.0.1", "localhost", "172.24.134.105"]
+ALLOWED_HOSTS = ["*"]
 
 
 # ===============================
@@ -167,12 +167,12 @@ WSGI_APPLICATION = "coreroot.wsgi.application"
 # ===============================
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "ENGINE": "django.db.backends.postgresql",
         "NAME": "coredb",
         "USER": "viki",
         "PASSWORD": "410554",
         "HOST": "127.0.0.1",
-        "PORT": "",
+        "PORT": "5434",
     }
 }
 
@@ -209,6 +209,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://172.24.134.105:3000",
 ]
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
@@ -218,4 +219,5 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
+    "http://172.24.134.105:3000",
 ]
